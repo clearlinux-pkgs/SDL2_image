@@ -4,12 +4,12 @@
 #
 Name     : SDL2_image
 Version  : 2.0.1
-Release  : 1
+Release  : 2
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
-License  : BSD-3-Clause BSL-1.0 GPL-2.0 Libpng libtiff
+License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng Zlib libtiff
 Requires: SDL2_image-lib
 BuildRequires : SDL2-dev
 BuildRequires : cmake
@@ -20,7 +20,6 @@ BuildRequires : pkgconfig(libpng)
 BuildRequires : python-dev
 BuildRequires : scons
 BuildRequires : setuptools
-BuildRequires : tiff-dev
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -45,7 +44,6 @@ lib components for the SDL2_image package.
 
 
 %prep
-cd ..
 %setup -q -n SDL2_image-2.0.1
 
 %build
