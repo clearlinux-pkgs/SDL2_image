@@ -4,7 +4,7 @@
 #
 Name     : SDL2_image
 Version  : 2.0.1
-Release  : 2
+Release  : 3
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
