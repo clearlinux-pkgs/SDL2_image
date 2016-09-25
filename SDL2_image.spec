@@ -4,7 +4,7 @@
 #
 Name     : SDL2_image
 Version  : 2.0.1
-Release  : 4
+Release  : 5
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
@@ -17,6 +17,7 @@ BuildRequires : libjpeg-turbo-dev
 BuildRequires : pbr
 BuildRequires : pip
 BuildRequires : pkgconfig(libpng)
+BuildRequires : pkgconfig(libwebp)
 BuildRequires : python-dev
 BuildRequires : scons
 BuildRequires : setuptools
@@ -47,10 +48,12 @@ lib components for the SDL2_image package.
 %setup -q -n SDL2_image-2.0.1
 
 %build
+export LANG=C
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
 %check
+export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
