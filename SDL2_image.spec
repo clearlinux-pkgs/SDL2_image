@@ -4,7 +4,7 @@
 #
 Name     : SDL2_image
 Version  : 2.0.1
-Release  : 6
+Release  : 7
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.1.zip
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
@@ -69,9 +69,10 @@ rm -rf %{buildroot}
 %files dev
 %defattr(-,root,root,-)
 /usr/include/SDL2/SDL_image.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libSDL2_image.so
+/usr/lib64/pkgconfig/SDL2_image.pc
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libSDL2_image-2.0.so.0
+/usr/lib64/libSDL2_image-2.0.so.0.0.1
