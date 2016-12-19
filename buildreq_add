@@ -1,3 +1,6 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
 SDL2-dev
+SDL2-dev32
+libjpeg-turbo-dev
+libjpeg-turbo-dev32
