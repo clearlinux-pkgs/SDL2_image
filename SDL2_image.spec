@@ -31,7 +31,7 @@ BuildRequires : pkgconfig(32libpng)
 BuildRequires : pkgconfig(32libwebp)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
-BuildRequires : python-dev
+
 BuildRequires : python3-dev
 BuildRequires : scons
 BuildRequires : sed
