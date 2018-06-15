@@ -6,7 +6,7 @@
 #
 Name     : SDL2_image
 Version  : 2.0.2
-Release  : 15
+Release  : 16
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.2.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.2.zip
 Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.2.zip.sig
