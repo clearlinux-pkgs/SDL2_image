@@ -2,15 +2,3 @@ Configure miss: tiffio.h usability
 Configure miss: tiffio.h presence
 Configure miss: tiffio.h
 Configure miss: TIFFClientOpen in -ltiff
-Configure miss: i686-generic-linux-gnu-objdump
-Configure miss: i686-generic-linux-gnu-strip
-Configure miss: i686-generic-linux-gnu-gcc
-Configure miss: i686-generic-linux-gnu-objcc
-Configure miss: i686-generic-linux-gnu-objc
-Configure miss: i686-generic-linux-gnu-cc
-Configure miss: i686-generic-linux-gnu-CC
-Configure miss: i686-generic-linux-gnu-pkg-config
-Configure miss: tiffio.h usability
-Configure miss: tiffio.h presence
-Configure miss: tiffio.h
-Configure miss: TIFFClientOpen in -ltiff
