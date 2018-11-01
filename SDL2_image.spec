@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x30A59377A7763BE6 (slouken@libsdl.org)
 #
 Name     : SDL2_image
-Version  : 2.0.2
-Release  : 18
-URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.2.zip
-Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.2.zip
-Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.2.zip.sig
+Version  : 2.0.4
+Release  : 19
+URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
+Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
+Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip.sig
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng Zlib libtiff
@@ -57,14 +57,14 @@ license components for the SDL2_image package.
 
 
 %prep
-%setup -q -n SDL2_image-2.0.2
+%setup -q -n SDL2_image-2.0.4
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1541029972
+export SOURCE_DATE_EPOCH=1541072098
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
@@ -80,7 +80,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1541029972
+export SOURCE_DATE_EPOCH=1541072098
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
 cp COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/COPYING.txt
@@ -101,7 +101,7 @@ cp debian/copyright %{buildroot}/usr/share/package-licenses/SDL2_image/debian_co
 cp external/libpng-1.6.32/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_LICENSE
 cp external/libpng-1.6.32/contrib/gregbook/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_COPYING
 cp external/libpng-1.6.32/contrib/gregbook/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_LICENSE
-cp external/libwebp-0.6.0/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libwebp-0.6.0_COPYING
+cp external/libwebp-1.0.0/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.0_COPYING
 cp external/tiff-4.0.8/COPYRIGHT %{buildroot}/usr/share/package-licenses/SDL2_image/external_tiff-4.0.8_COPYRIGHT
 cp external/zlib-1.2.11/contrib/dotzlib/LICENSE_1_0.txt %{buildroot}/usr/share/package-licenses/SDL2_image/external_zlib-1.2.11_contrib_dotzlib_LICENSE_1_0.txt
 %make_install
@@ -118,7 +118,7 @@ cp external/zlib-1.2.11/contrib/dotzlib/LICENSE_1_0.txt %{buildroot}/usr/share/p
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libSDL2_image-2.0.so.0
-/usr/lib64/libSDL2_image-2.0.so.0.2.0
+/usr/lib64/libSDL2_image-2.0.so.0.2.2
 
 %files license
 %defattr(0644,root,root,0755)
@@ -140,6 +140,6 @@ cp external/zlib-1.2.11/contrib/dotzlib/LICENSE_1_0.txt %{buildroot}/usr/share/p
 /usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_LICENSE
 /usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_COPYING
 /usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_LICENSE
-/usr/share/package-licenses/SDL2_image/external_libwebp-0.6.0_COPYING
+/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.0_COPYING
 /usr/share/package-licenses/SDL2_image/external_tiff-4.0.8_COPYRIGHT
 /usr/share/package-licenses/SDL2_image/external_zlib-1.2.11_contrib_dotzlib_LICENSE_1_0.txt
