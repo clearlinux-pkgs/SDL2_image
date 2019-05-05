@@ -6,11 +6,11 @@
 #
 Name     : SDL2_image
 Version  : 2.0.4
-Release  : 20
+Release  : 21
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
 Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip.sig
-Summary  : Simple DirectMedia Layer - Sample Image Loading Library
+Summary  : A simple library to load images of various formats as SDL surfaces (Version 2)
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng Zlib libtiff
 Requires: SDL2_image-lib = %{version}-%{release}
@@ -42,6 +42,7 @@ Summary: dev components for the SDL2_image package.
 Group: Development
 Requires: SDL2_image-lib = %{version}-%{release}
 Provides: SDL2_image-devel = %{version}-%{release}
+Requires: SDL2_image = %{version}-%{release}
 
 %description dev
 dev components for the SDL2_image package.
@@ -94,11 +95,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1546435031
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export SOURCE_DATE_EPOCH=1557075728
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -121,7 +125,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1546435031
+export SOURCE_DATE_EPOCH=1557075728
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
 cp COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/COPYING.txt
@@ -129,10 +133,12 @@ cp VisualC/external/lib/x64/LICENSE.jpeg.txt %{buildroot}/usr/share/package-lice
 cp VisualC/external/lib/x64/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.png.txt
 cp VisualC/external/lib/x64/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.tiff.txt
 cp VisualC/external/lib/x64/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.webp.txt
+cp VisualC/external/lib/x64/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.zlib.txt
 cp VisualC/external/lib/x86/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.jpeg.txt
 cp VisualC/external/lib/x86/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.png.txt
 cp VisualC/external/lib/x86/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.tiff.txt
 cp VisualC/external/lib/x86/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.webp.txt
+cp VisualC/external/lib/x86/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.zlib.txt
 cp Xcode/Frameworks/webp.framework/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Resources_LICENSE.webp.txt
 cp Xcode/Frameworks/webp.framework/Versions/A/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_A_Resources_LICENSE.webp.txt
 cp Xcode/Frameworks/webp.framework/Versions/Current/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_Current_Resources_LICENSE.webp.txt
@@ -186,10 +192,12 @@ popd
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.png.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.tiff.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.webp.txt
+/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.zlib.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.jpeg.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.png.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.tiff.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.webp.txt
+/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.zlib.txt
 /usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Resources_LICENSE.webp.txt
 /usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_A_Resources_LICENSE.webp.txt
 /usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_Current_Resources_LICENSE.webp.txt
