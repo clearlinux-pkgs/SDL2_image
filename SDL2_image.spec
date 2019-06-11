@@ -6,11 +6,11 @@
 #
 Name     : SDL2_image
 Version  : 2.0.4
-Release  : 21
+Release  : 22
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
 Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip.sig
-Summary  : A simple library to load images of various formats as SDL surfaces (Version 2)
+Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng Zlib libtiff
 Requires: SDL2_image-lib = %{version}-%{release}
@@ -32,6 +32,7 @@ BuildRequires : pkgconfig(32libwebp)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 BuildRequires : sed
+Patch1: CVE-2019-7635.patch
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -86,6 +87,7 @@ license components for the SDL2_image package.
 
 %prep
 %setup -q -n SDL2_image-2.0.4
+%patch1 -p1
 pushd ..
 cp -a SDL2_image-2.0.4 build32
 popd
@@ -95,14 +97,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557075728
+export SOURCE_DATE_EPOCH=1560289228
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
-export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -125,7 +128,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557075728
+export SOURCE_DATE_EPOCH=1560289228
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
 cp COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/COPYING.txt
