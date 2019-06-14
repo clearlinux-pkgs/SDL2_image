@@ -1,0 +1,57 @@
+
+# HG changeset patch
+# User Sam Lantinga <slouken@libsdl.org>
+# Date 1560237306 25200
+# Node ID 26061e601c8157427ca319d943a715174dadce8c
+# Parent  95fc7da55247a4368848144b9374a88a6494fd5c
+Fixed TALOS-2019-0844 - XPM image colorhash parsing Code Execution Vulnerability
+
+The table entry in the color_hash is created in the create_colorhash function based on the number of colors passed into the function. The size of the color_hash table is the first value in the powers of 2 larger than the passed in number of colors [2]. The size of the allocation is this calculated value * 8 (sizeof(struct hash_entry **)) [3]. This multiplication can cause an overflow, resulting in a very small allocation.
+
+diff -r 95fc7da55247 -r 26061e601c81 IMG_xpm.c
+--- a/IMG_xpm.c	Mon Jun 10 23:50:21 2019 -0700
++++ b/IMG_xpm.c	Tue Jun 11 00:15:06 2019 -0700
+@@ -101,7 +101,7 @@
+ 
+     /* we know how many entries we need, so we can allocate
+        everything here */
+-    hash = (struct color_hash *)SDL_malloc(sizeof *hash);
++    hash = (struct color_hash *)SDL_calloc(1, sizeof(*hash));
+     if (!hash)
+         return NULL;
+ 
+@@ -110,15 +110,29 @@
+         ;
+     hash->size = s;
+     hash->maxnum = maxnum;
++
+     bytes = hash->size * sizeof(struct hash_entry **);
+-    hash->entries = NULL;   /* in case malloc fails */
+-    hash->table = (struct hash_entry **)SDL_malloc(bytes);
++    /* Check for overflow */
++    if ((bytes / sizeof(struct hash_entry **)) != hash->size) {
++        IMG_SetError("memory allocation overflow");
++        SDL_free(hash);
++        return NULL;
++    }
++    hash->table = (struct hash_entry **)SDL_calloc(1, bytes);
+     if (!hash->table) {
+         SDL_free(hash);
+         return NULL;
+     }
+-    SDL_memset(hash->table, 0, bytes);
+-    hash->entries = (struct hash_entry *)SDL_malloc(maxnum * sizeof(struct hash_entry));
++
++    bytes = maxnum * sizeof(struct hash_entry);
++    /* Check for overflow */
++    if ((bytes / sizeof(struct hash_entry)) != maxnum) {
++        IMG_SetError("memory allocation overflow");
++        SDL_free(hash->table);
++        SDL_free(hash);
++        return NULL;
++    }
++    hash->entries = (struct hash_entry *)SDL_calloc(1, bytes);
+     if (!hash->entries) {
+         SDL_free(hash->table);
+         SDL_free(hash);
+

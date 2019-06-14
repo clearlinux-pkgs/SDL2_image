@@ -1,0 +1,37 @@
+
+# HG changeset patch
+# User Sam Lantinga <slouken@libsdl.org>
+# Date 1560235821 25200
+# Node ID 95fc7da55247a4368848144b9374a88a6494fd5c
+# Parent  b1a80aec2b1037704b666d716505da6ba968cba9
+Fixed TALOS-2019-0843 - XPM image color code code execution vulnerability
+
+By providing a sufficiently large ncolors and cpp value, the buffer allocation size can overflow into a size too small to hold the color code string. This causes the memcpy to cause a heap overflow, potentially resulting in code execution.
+
+diff -r b1a80aec2b10 -r 95fc7da55247 IMG_xpm.c
+--- a/IMG_xpm.c	Mon Jun 10 17:24:08 2019 -0700
++++ b/IMG_xpm.c	Mon Jun 10 23:50:21 2019 -0700
+@@ -1026,6 +1026,11 @@
+         goto done;
+     }
+ 
++    /* Check for allocation overflow */
++    if ((size_t)(ncolors * cpp)/cpp != ncolors) {
++        error = "Invalid color specification";
++        goto done;
++    }
+     keystrings = (char *)SDL_malloc(ncolors * cpp);
+     if (!keystrings) {
+         error = "Out of memory";
+@@ -1093,8 +1098,9 @@
+                 c->g = (Uint8)(rgb >> 8);
+                 c->b = (Uint8)(rgb);
+                 pixel = index;
+-            } else
++            } else {
+                 pixel = rgb;
++            }
+             add_colorhash(colors, nextkey, cpp, pixel);
+             nextkey += cpp;
+             if (rgb == 0xffffffff)
+

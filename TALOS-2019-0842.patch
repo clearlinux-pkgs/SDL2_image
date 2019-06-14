@@ -1,0 +1,21 @@
+
+# HG changeset patch
+# User Sam Lantinga <slouken@libsdl.org>
+# Date 1560212648 25200
+# Node ID b1a80aec2b1037704b666d716505da6ba968cba9
+# Parent  db1f3b1892aba17ea1239e04e0962e9d41060ba8
+Fixed TALOS-2019-0842 - XCF Image Code Execution Vulnerability
+
+diff -r db1f3b1892ab -r b1a80aec2b10 IMG_xcf.c
+--- a/IMG_xcf.c	Mon Jun 10 16:49:12 2019 -0700
++++ b/IMG_xcf.c	Mon Jun 10 17:24:08 2019 -0700
+@@ -686,7 +686,7 @@
+             p16 = (Uint16 *) p8;
+             p = (Uint32 *) p8;
+             for (y = ty; y < ty + oy; y++) {
+-                if ((ty >= surface->h) || ((tx+ox) > surface->w)) {
++                if ((y >= surface->h) || ((tx+ox) > surface->w)) {
+                     break;
+                 }
+                 row = (Uint32 *) ((Uint8 *) surface->pixels + y * surface->pitch + tx * 4);
+

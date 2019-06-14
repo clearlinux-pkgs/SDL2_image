@@ -6,7 +6,7 @@
 #
 Name     : SDL2_image
 Version  : 2.0.4
-Release  : 22
+Release  : 24
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
 Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip.sig
@@ -33,6 +33,12 @@ BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 BuildRequires : sed
 Patch1: CVE-2019-7635.patch
+Patch2: CVE-2019-12216.patch
+Patch3: TALOS-2019-0821.patch
+Patch4: CVE-2019-12221.patch
+Patch5: TALOS-2019-0842.patch
+Patch6: TALOS-2019-0843.patch
+Patch7: TALOS-2019-0844.patch
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -88,6 +94,12 @@ license components for the SDL2_image package.
 %prep
 %setup -q -n SDL2_image-2.0.4
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 pushd ..
 cp -a SDL2_image-2.0.4 build32
 popd
@@ -97,7 +109,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1560289228
+export SOURCE_DATE_EPOCH=1560549809
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -128,7 +140,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1560289228
+export SOURCE_DATE_EPOCH=1560549809
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
 cp COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/COPYING.txt

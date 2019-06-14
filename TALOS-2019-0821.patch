@@ -1,0 +1,20 @@
+# HG changeset patch
+# User Sam Lantinga <slouken@libsdl.org>
+# Date 1560197566 25200
+# Node ID b920be2b3fc69428839f2db46630fefa3abc03c1
+# Parent  7453e79c8cdbebb4d3cde3c9382cff0356650c2b
+Fixed TALOS-2019-0821, reading invalid data from the file when bpl is -1
+
+diff -r 7453e79c8cdb -r b920be2b3fc6 IMG_pcx.c
+--- a/IMG_pcx.c	Mon Jun 10 13:07:58 2019 -0700
++++ b/IMG_pcx.c	Mon Jun 10 13:12:46 2019 -0700
+@@ -160,7 +160,7 @@
+         goto done;
+ 
+     bpl = pcxh.NPlanes * pcxh.BytesPerLine;
+-    if ( bpl > surface->pitch ) {
++    if ( bpl < 0 || bpl > surface->pitch ) {
+         error = "bytes per line is too large (corrupt?)";
+         goto done;
+     }
+
