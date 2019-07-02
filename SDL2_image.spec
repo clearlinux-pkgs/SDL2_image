@@ -5,14 +5,14 @@
 # Source0 file verified with key 0x30A59377A7763BE6 (slouken@libsdl.org)
 #
 Name     : SDL2_image
-Version  : 2.0.4
-Release  : 24
-URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
-Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip
-Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.4.zip.sig
+Version  : 2.0.5
+Release  : 25
+URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
+Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
+Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz.sig
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
-License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng Zlib libtiff
+License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng MIT Zlib libtiff
 Requires: SDL2_image-lib = %{version}-%{release}
 Requires: SDL2_image-license = %{version}-%{release}
 BuildRequires : SDL2-dev32
@@ -32,13 +32,6 @@ BuildRequires : pkgconfig(32libwebp)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 BuildRequires : sed
-Patch1: CVE-2019-7635.patch
-Patch2: CVE-2019-12216.patch
-Patch3: TALOS-2019-0821.patch
-Patch4: CVE-2019-12221.patch
-Patch5: TALOS-2019-0842.patch
-Patch6: TALOS-2019-0843.patch
-Patch7: TALOS-2019-0844.patch
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -92,24 +85,17 @@ license components for the SDL2_image package.
 
 
 %prep
-%setup -q -n SDL2_image-2.0.4
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%setup -q -n SDL2_image-2.0.5
 pushd ..
-cp -a SDL2_image-2.0.4 build32
+cp -a SDL2_image-2.0.5 build32
 popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1560549809
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1562094889
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -131,7 +117,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 make  %{?_smp_mflags}
 popd
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -140,7 +126,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1560549809
+export SOURCE_DATE_EPOCH=1562094889
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
 cp COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/COPYING.txt
@@ -154,15 +140,14 @@ cp VisualC/external/lib/x86/LICENSE.png.txt %{buildroot}/usr/share/package-licen
 cp VisualC/external/lib/x86/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.tiff.txt
 cp VisualC/external/lib/x86/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.webp.txt
 cp VisualC/external/lib/x86/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.zlib.txt
-cp Xcode/Frameworks/webp.framework/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Resources_LICENSE.webp.txt
 cp Xcode/Frameworks/webp.framework/Versions/A/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_A_Resources_LICENSE.webp.txt
-cp Xcode/Frameworks/webp.framework/Versions/Current/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_Current_Resources_LICENSE.webp.txt
 cp debian/copyright %{buildroot}/usr/share/package-licenses/SDL2_image/debian_copyright
-cp external/libpng-1.6.32/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_LICENSE
-cp external/libpng-1.6.32/contrib/gregbook/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_COPYING
-cp external/libpng-1.6.32/contrib/gregbook/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_LICENSE
-cp external/libwebp-1.0.0/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.0_COPYING
-cp external/tiff-4.0.8/COPYRIGHT %{buildroot}/usr/share/package-licenses/SDL2_image/external_tiff-4.0.8_COPYRIGHT
+cp external/libpng-1.6.37/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_LICENSE
+cp external/libpng-1.6.37/contrib/gregbook/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_COPYING
+cp external/libpng-1.6.37/contrib/gregbook/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_LICENSE
+cp external/libpng-1.6.37/contrib/pngminus/LICENSE.txt %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_pngminus_LICENSE.txt
+cp external/libwebp-1.0.2/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.2_COPYING
+cp external/tiff-4.0.9/COPYRIGHT %{buildroot}/usr/share/package-licenses/SDL2_image/external_tiff-4.0.9_COPYRIGHT
 cp external/zlib-1.2.11/contrib/dotzlib/LICENSE_1_0.txt %{buildroot}/usr/share/package-licenses/SDL2_image/external_zlib-1.2.11_contrib_dotzlib_LICENSE_1_0.txt
 pushd ../build32/
 %make_install32
@@ -193,12 +178,12 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libSDL2_image-2.0.so.0
-/usr/lib64/libSDL2_image-2.0.so.0.2.2
+/usr/lib64/libSDL2_image-2.0.so.0.2.3
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libSDL2_image-2.0.so.0
-/usr/lib32/libSDL2_image-2.0.so.0.2.2
+/usr/lib32/libSDL2_image-2.0.so.0.2.3
 
 %files license
 %defattr(0644,root,root,0755)
@@ -213,13 +198,12 @@ popd
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.tiff.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.webp.txt
 /usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.zlib.txt
-/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Resources_LICENSE.webp.txt
 /usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_A_Resources_LICENSE.webp.txt
-/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_Current_Resources_LICENSE.webp.txt
 /usr/share/package-licenses/SDL2_image/debian_copyright
-/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_LICENSE
-/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_COPYING
-/usr/share/package-licenses/SDL2_image/external_libpng-1.6.32_contrib_gregbook_LICENSE
-/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.0_COPYING
-/usr/share/package-licenses/SDL2_image/external_tiff-4.0.8_COPYRIGHT
+/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_LICENSE
+/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_COPYING
+/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_LICENSE
+/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_pngminus_LICENSE.txt
+/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.2_COPYING
+/usr/share/package-licenses/SDL2_image/external_tiff-4.0.9_COPYRIGHT
 /usr/share/package-licenses/SDL2_image/external_zlib-1.2.11_contrib_dotzlib_LICENSE_1_0.txt
