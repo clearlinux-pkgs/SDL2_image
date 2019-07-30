@@ -6,10 +6,10 @@
 #
 Name     : SDL2_image
 Version  : 2.0.5
-Release  : 25
+Release  : 26
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
-Source99 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz.sig
+Source1 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz.sig
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng MIT Zlib libtiff
@@ -32,6 +32,7 @@ BuildRequires : pkgconfig(32libwebp)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 BuildRequires : sed
+Patch1: CVE-2019-13616.patch
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -86,6 +87,7 @@ license components for the SDL2_image package.
 
 %prep
 %setup -q -n SDL2_image-2.0.5
+%patch1 -p1
 pushd ..
 cp -a SDL2_image-2.0.5 build32
 popd
@@ -95,7 +97,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1562094889
+export SOURCE_DATE_EPOCH=1564515152
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -126,7 +128,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1562094889
+export SOURCE_DATE_EPOCH=1564515152
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
 cp COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/COPYING.txt
