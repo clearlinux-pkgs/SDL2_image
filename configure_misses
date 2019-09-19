@@ -1,3 +1,5 @@
+Configure miss: windres
+Configure miss: linux-gnu-windres
 Configure miss: tiffio.h usability
 Configure miss: tiffio.h presence
 Configure miss: tiffio.h
@@ -7,6 +9,9 @@ Configure miss: i686-generic-linux-gnu-objcc
 Configure miss: i686-generic-linux-gnu-objc
 Configure miss: i686-generic-linux-gnu-cc
 Configure miss: i686-generic-linux-gnu-CC
+Configure miss: windres
+Configure miss: i686-generic-linux-gnu-windres
+Configure miss: linux-gnu-windres
 Configure miss: tiffio.h usability
 Configure miss: tiffio.h presence
 Configure miss: tiffio.h
