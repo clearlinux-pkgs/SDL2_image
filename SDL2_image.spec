@@ -6,31 +6,24 @@
 #
 Name     : SDL2_image
 Version  : 2.0.5
-Release  : 29
+Release  : 30
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
-Source1 : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz.sig
+Source1  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz.sig
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 GPL-2.0 IJG Libpng MIT Zlib libtiff
 Requires: SDL2_image-lib = %{version}-%{release}
 Requires: SDL2_image-license = %{version}-%{release}
-BuildRequires : SDL2-dev32
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-golang
 BuildRequires : buildreq-scons
-BuildRequires : gcc-dev32
-BuildRequires : gcc-libgcc32
-BuildRequires : gcc-libstdc++32
-BuildRequires : glibc-dev32
-BuildRequires : glibc-libc32
-BuildRequires : libjpeg-turbo-dev32
+BuildRequires : libjpeg-turbo-dev
 BuildRequires : pkg-config
-BuildRequires : pkgconfig(32libpng)
-BuildRequires : pkgconfig(32libwebp)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
+BuildRequires : pkgconfig(sdl2)
 BuildRequires : sed
 Patch1: CVE-2019-13616.patch
 
@@ -49,16 +42,6 @@ Requires: SDL2_image = %{version}-%{release}
 dev components for the SDL2_image package.
 
 
-%package dev32
-Summary: dev32 components for the SDL2_image package.
-Group: Default
-Requires: SDL2_image-lib32 = %{version}-%{release}
-Requires: SDL2_image-dev = %{version}-%{release}
-
-%description dev32
-dev32 components for the SDL2_image package.
-
-
 %package lib
 Summary: lib components for the SDL2_image package.
 Group: Libraries
@@ -66,15 +49,6 @@ Requires: SDL2_image-license = %{version}-%{release}
 
 %description lib
 lib components for the SDL2_image package.
-
-
-%package lib32
-Summary: lib32 components for the SDL2_image package.
-Group: Default
-Requires: SDL2_image-license = %{version}-%{release}
-
-%description lib32
-lib32 components for the SDL2_image package.
 
 
 %package license
@@ -87,79 +61,57 @@ license components for the SDL2_image package.
 
 %prep
 %setup -q -n SDL2_image-2.0.5
+cd %{_builddir}/SDL2_image-2.0.5
 %patch1 -p1
-pushd ..
-cp -a SDL2_image-2.0.5 build32
-popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568913468
+export SOURCE_DATE_EPOCH=1600307366
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
-pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
-%configure --disable-static    --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make  %{?_smp_mflags}
-popd
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
-cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1568913468
+export SOURCE_DATE_EPOCH=1600307366
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
-cp COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/COPYING.txt
-cp VisualC/external/lib/x64/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.jpeg.txt
-cp VisualC/external/lib/x64/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.png.txt
-cp VisualC/external/lib/x64/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.tiff.txt
-cp VisualC/external/lib/x64/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.webp.txt
-cp VisualC/external/lib/x64/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.zlib.txt
-cp VisualC/external/lib/x86/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.jpeg.txt
-cp VisualC/external/lib/x86/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.png.txt
-cp VisualC/external/lib/x86/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.tiff.txt
-cp VisualC/external/lib/x86/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.webp.txt
-cp VisualC/external/lib/x86/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.zlib.txt
-cp Xcode/Frameworks/webp.framework/Versions/A/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_A_Resources_LICENSE.webp.txt
-cp debian/copyright %{buildroot}/usr/share/package-licenses/SDL2_image/debian_copyright
-cp external/libpng-1.6.37/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_LICENSE
-cp external/libpng-1.6.37/contrib/gregbook/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_COPYING
-cp external/libpng-1.6.37/contrib/gregbook/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_LICENSE
-cp external/libpng-1.6.37/contrib/pngminus/LICENSE.txt %{buildroot}/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_pngminus_LICENSE.txt
-cp external/libwebp-1.0.2/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.2_COPYING
-cp external/tiff-4.0.9/COPYRIGHT %{buildroot}/usr/share/package-licenses/SDL2_image/external_tiff-4.0.9_COPYRIGHT
-cp external/zlib-1.2.11/contrib/dotzlib/LICENSE_1_0.txt %{buildroot}/usr/share/package-licenses/SDL2_image/external_zlib-1.2.11_contrib_dotzlib_LICENSE_1_0.txt
-pushd ../build32/
-%make_install32
-if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
-then
-pushd %{buildroot}/usr/lib32/pkgconfig
-for i in *.pc ; do ln -s $i 32$i ; done
-popd
-fi
-popd
+cp %{_builddir}/SDL2_image-2.0.5/COPYING.txt %{buildroot}/usr/share/package-licenses/SDL2_image/e46696ddcdee46a0a69564af93818f7fb86486f1
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x64/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL2_image/3ad6bae604193ca52623b7f9bfda7e1907ad068d
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x64/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL2_image/6c7eeb53e64ff1d2cf963009aac36b5c4e56e1f5
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x64/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/2ca80d6f23171dd0da1ee3a1db65058559369f55
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x64/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/066b40e95d2608141384ecf3d5b2123423e59e16
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x64/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL2_image/cf6f537615dbfcec52703129d2e268bc57dd2afa
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x86/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL2_image/3ad6bae604193ca52623b7f9bfda7e1907ad068d
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x86/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL2_image/6c7eeb53e64ff1d2cf963009aac36b5c4e56e1f5
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x86/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/2ca80d6f23171dd0da1ee3a1db65058559369f55
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x86/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/066b40e95d2608141384ecf3d5b2123423e59e16
+cp %{_builddir}/SDL2_image-2.0.5/VisualC/external/lib/x86/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL2_image/cf6f537615dbfcec52703129d2e268bc57dd2afa
+cp %{_builddir}/SDL2_image-2.0.5/Xcode/Frameworks/webp.framework/Versions/A/Resources/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/ff9a03d09711ea3f630767985780e5b279f45dd8
+cp %{_builddir}/SDL2_image-2.0.5/debian/copyright %{buildroot}/usr/share/package-licenses/SDL2_image/cd823a650106a5aed889f3a243147619f21bac89
+cp %{_builddir}/SDL2_image-2.0.5/external/libpng-1.6.37/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/fc3951ba26fe1914759f605696a1d23e3b41766f
+cp %{_builddir}/SDL2_image-2.0.5/external/libpng-1.6.37/contrib/gregbook/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/80b6f4fcbc19d7431482cba012e86f587828c1ba
+cp %{_builddir}/SDL2_image-2.0.5/external/libpng-1.6.37/contrib/gregbook/LICENSE %{buildroot}/usr/share/package-licenses/SDL2_image/aa4b9207aaff26bc16c562d6cd766a9eed49af1e
+cp %{_builddir}/SDL2_image-2.0.5/external/libpng-1.6.37/contrib/pngminus/LICENSE.txt %{buildroot}/usr/share/package-licenses/SDL2_image/29883b5b9150592328072643614229f6d320bc6e
+cp %{_builddir}/SDL2_image-2.0.5/external/libwebp-1.0.2/COPYING %{buildroot}/usr/share/package-licenses/SDL2_image/59cd938fcbd6735b1ef91781280d6eb6c4b7c5d9
+cp %{_builddir}/SDL2_image-2.0.5/external/tiff-4.0.9/COPYRIGHT %{buildroot}/usr/share/package-licenses/SDL2_image/a2f64f2a85f5fd34bda8eb713c3aad008adbb589
+cp %{_builddir}/SDL2_image-2.0.5/external/zlib-1.2.11/contrib/dotzlib/LICENSE_1_0.txt %{buildroot}/usr/share/package-licenses/SDL2_image/892b34f7865d90a6f949f50d95e49625a10bc7f0
 %make_install
 
 %files
@@ -171,41 +123,25 @@ popd
 /usr/lib64/libSDL2_image.so
 /usr/lib64/pkgconfig/SDL2_image.pc
 
-%files dev32
-%defattr(-,root,root,-)
-/usr/lib32/libSDL2_image.so
-/usr/lib32/pkgconfig/32SDL2_image.pc
-/usr/lib32/pkgconfig/SDL2_image.pc
-
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libSDL2_image-2.0.so.0
 /usr/lib64/libSDL2_image-2.0.so.0.2.3
 
-%files lib32
-%defattr(-,root,root,-)
-/usr/lib32/libSDL2_image-2.0.so.0
-/usr/lib32/libSDL2_image-2.0.so.0.2.3
-
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/SDL2_image/COPYING.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.jpeg.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.png.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.tiff.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.webp.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x64_LICENSE.zlib.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.jpeg.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.png.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.tiff.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.webp.txt
-/usr/share/package-licenses/SDL2_image/VisualC_external_lib_x86_LICENSE.zlib.txt
-/usr/share/package-licenses/SDL2_image/Xcode_Frameworks_webp.framework_Versions_A_Resources_LICENSE.webp.txt
-/usr/share/package-licenses/SDL2_image/debian_copyright
-/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_LICENSE
-/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_COPYING
-/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_gregbook_LICENSE
-/usr/share/package-licenses/SDL2_image/external_libpng-1.6.37_contrib_pngminus_LICENSE.txt
-/usr/share/package-licenses/SDL2_image/external_libwebp-1.0.2_COPYING
-/usr/share/package-licenses/SDL2_image/external_tiff-4.0.9_COPYRIGHT
-/usr/share/package-licenses/SDL2_image/external_zlib-1.2.11_contrib_dotzlib_LICENSE_1_0.txt
+/usr/share/package-licenses/SDL2_image/066b40e95d2608141384ecf3d5b2123423e59e16
+/usr/share/package-licenses/SDL2_image/29883b5b9150592328072643614229f6d320bc6e
+/usr/share/package-licenses/SDL2_image/2ca80d6f23171dd0da1ee3a1db65058559369f55
+/usr/share/package-licenses/SDL2_image/3ad6bae604193ca52623b7f9bfda7e1907ad068d
+/usr/share/package-licenses/SDL2_image/59cd938fcbd6735b1ef91781280d6eb6c4b7c5d9
+/usr/share/package-licenses/SDL2_image/6c7eeb53e64ff1d2cf963009aac36b5c4e56e1f5
+/usr/share/package-licenses/SDL2_image/80b6f4fcbc19d7431482cba012e86f587828c1ba
+/usr/share/package-licenses/SDL2_image/892b34f7865d90a6f949f50d95e49625a10bc7f0
+/usr/share/package-licenses/SDL2_image/a2f64f2a85f5fd34bda8eb713c3aad008adbb589
+/usr/share/package-licenses/SDL2_image/aa4b9207aaff26bc16c562d6cd766a9eed49af1e
+/usr/share/package-licenses/SDL2_image/cd823a650106a5aed889f3a243147619f21bac89
+/usr/share/package-licenses/SDL2_image/cf6f537615dbfcec52703129d2e268bc57dd2afa
+/usr/share/package-licenses/SDL2_image/e46696ddcdee46a0a69564af93818f7fb86486f1
+/usr/share/package-licenses/SDL2_image/fc3951ba26fe1914759f605696a1d23e3b41766f
+/usr/share/package-licenses/SDL2_image/ff9a03d09711ea3f630767985780e5b279f45dd8
