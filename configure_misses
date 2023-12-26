@@ -1,6 +1,20 @@
+Configure miss: JxlSignatureCheck in -ljxl
+Configure miss: JxlSignatureCheck in -ljxl
+Configure miss: gsort
+Configure miss: gsort
+Configure miss: jxl/decode.h
+Configure miss: jxl/decode.h
+Configure miss: libavif >= 0.9.3
+Configure miss: libavif >= 0.9.3
+Configure miss: libavif >= 0.9.3
+Configure miss: libavif >= 0.9.3
+Configure miss: libjxl
+Configure miss: libjxl
+Configure miss: necessary GCC -Wno-multichar option
+Configure miss: necessary GCC -Wno-multichar option
+Configure miss: whether the compiler supports GNU Objective C
+Configure miss: whether the compiler supports GNU Objective C
 Configure miss: windres
-Configure miss: linux-gnu-windres
-Configure miss: tiffio.h usability
-Configure miss: tiffio.h presence
-Configure miss: tiffio.h
-Configure miss: TIFFClientOpen in -ltiff
+Configure miss: windres
+Configure miss: x86_64-generic-linux-gnu-clang
+Configure miss: x86_64-generic-linux-gnu-clang
