@@ -8,14 +8,14 @@
 # Source0 file verified with key 0x30A59377A7763BE6 (slouken@libsdl.org)
 #
 Name     : SDL2_image
-Version  : 2.8.1
-Release  : 33
-URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.8.1.tar.gz
-Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.8.1.tar.gz
-Source1  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.8.1.tar.gz.sig
+Version  : 2.8.2
+Release  : 34
+URL      : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.8.2.tar.gz
+Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.8.2.tar.gz
+Source1  : https://www.libsdl.org/projects/SDL_image/release/SDL2_image-2.8.2.tar.gz.sig
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
-License  : BSD-2-Clause BSD-3-Clause Zlib libtiff
+License  : Apache-2.0 BSD-2-Clause BSD-3-Clause Zlib libtiff
 Requires: SDL2_image-lib = %{version}-%{release}
 Requires: SDL2_image-license = %{version}-%{release}
 BuildRequires : buildreq-configure
@@ -64,10 +64,10 @@ license components for the SDL2_image package.
 
 
 %prep
-%setup -q -n SDL2_image-2.8.1
-cd %{_builddir}/SDL2_image-2.8.1
+%setup -q -n SDL2_image-2.8.2
+cd %{_builddir}/SDL2_image-2.8.2
 pushd ..
-cp -a SDL2_image-2.8.1 buildavx2
+cp -a SDL2_image-2.8.2 buildavx2
 popd
 
 %build
@@ -75,7 +75,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1703617438
+export SOURCE_DATE_EPOCH=1704225109
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -127,12 +127,14 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1703617438
+export SOURCE_DATE_EPOCH=1704225109
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL2_image
+cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x64/LICENSE.avif.txt %{buildroot}/usr/share/package-licenses/SDL2_image/a9d86e47cc323e86f14cec25506362f750a877d7 || :
 cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x64/LICENSE.dav1d.txt %{buildroot}/usr/share/package-licenses/SDL2_image/4f6bb845e36328fa89de127c56773dbfd9c90042 || :
 cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x64/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/f1a98d8f62af0ecf27736e2117608360013aea61 || :
 cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x64/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/00a7d2da8ecfab54b7859887e65ff57c71774f84 || :
+cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x86/LICENSE.avif.txt %{buildroot}/usr/share/package-licenses/SDL2_image/a9d86e47cc323e86f14cec25506362f750a877d7 || :
 cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x86/LICENSE.dav1d.txt %{buildroot}/usr/share/package-licenses/SDL2_image/4f6bb845e36328fa89de127c56773dbfd9c90042 || :
 cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x86/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL2_image/f1a98d8f62af0ecf27736e2117608360013aea61 || :
 cp %{_builddir}/SDL2_image-%{version}/VisualC/external/optional/x86/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL2_image/00a7d2da8ecfab54b7859887e65ff57c71774f84 || :
@@ -158,13 +160,14 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libSDL2_image-2.0.so.0.800.1
+/V3/usr/lib64/libSDL2_image-2.0.so.0.800.2
 /usr/lib64/libSDL2_image-2.0.so.0
-/usr/lib64/libSDL2_image-2.0.so.0.800.1
+/usr/lib64/libSDL2_image-2.0.so.0.800.2
 
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/SDL2_image/00a7d2da8ecfab54b7859887e65ff57c71774f84
 /usr/share/package-licenses/SDL2_image/4f6bb845e36328fa89de127c56773dbfd9c90042
 /usr/share/package-licenses/SDL2_image/56855624d497345923d749f17502a18029d72631
+/usr/share/package-licenses/SDL2_image/a9d86e47cc323e86f14cec25506362f750a877d7
 /usr/share/package-licenses/SDL2_image/f1a98d8f62af0ecf27736e2117608360013aea61
